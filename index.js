@@ -1,5 +1,5 @@
 const {  listContacts,
-    getContactById,
+     getContactById,
     removeContact,
     addContact } = require('./contacts.js')
 const { Command } = require('commander')
@@ -20,12 +20,12 @@ const argv = program.opts()
 function invokeAction({ action, id, name, email, phone }) {
     switch (action) {
       
-    case 'list':
-     listContacts()
+      case 'list':
+      listContacts().then(console.table)
           break
       
     case 'get':
-      getContactById(id)
+        getContactById(Number(id))
       break
     
     case 'add':
@@ -33,7 +33,7 @@ function invokeAction({ action, id, name, email, phone }) {
       break
     
     case 'remove':
-      removeContact(id)
+      removeContact(Number(id))
             break
         
     default:

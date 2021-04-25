@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "commander": "^7.2.0",
-    "shortid": "^2.2.16"
+    "uuid": "^8.3.2"
   }
 }

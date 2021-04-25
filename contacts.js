@@ -1,7 +1,8 @@
 const fs = require('fs').promises
 const path = require('path');
-const { getMaxListeners } = require('process');
-const shortid = require('shortid');
+const { v4: uuidv4 } = require('uuid');
+
+
 
     
 const contactsPath = path.join(__dirname, './db/contacts.json');  //путь к ф. contacts.json
@@ -21,12 +22,12 @@ const contactsPath = path.join(__dirname, './db/contacts.json');  //путь к 
 
 const getContactById = async contactId => {
   try {
-    const response = await fs.readFile(contactsPath);
-    const contacts = JSON.parse(response)
-    const userId = contacts.find(
+
+    const contacts = await listContacts()
+
+     const userId = contacts.find(
       contact => contact.id === contactId)
-    
-    
+        
      return  console.log(userId)
     
   }
@@ -40,8 +41,8 @@ const getContactById = async contactId => {
 const removeContact = async contactId => {
 
   try {
-    const response = await fs.readFile(contactsPath);
-    const contacts = JSON.parse(response)
+   
+    const contacts = await listContacts()
     const getContactId = contacts.find(contact => contact.id === contactId)
   
     if (!getContactId) {
@@ -63,11 +64,11 @@ catch(err){console.log(err)}
 
 const addContact = async( name, email, phone) => {
   try {
-    const response = await fs.readFile(contactsPath)
-    const contacts = JSON.parse(response)
+   
+    const contacts = await listContacts()
 
       
-   contacts.push({id: contacts.length + 1,
+   contacts.push({id: uuidv4(),
       name,
       email,
       phone});
@@ -78,7 +79,7 @@ const addContact = async( name, email, phone) => {
    }
  
 
-  
+ addContact('kiwi', 'kiwi@mail.net', '523-65-74') 
 
 module.exports = {
   listContacts,
